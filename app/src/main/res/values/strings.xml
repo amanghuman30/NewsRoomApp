@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">NewsRoomApp</string>
-    <string name="home_button_text">Click</string>
+
+    <string name="tab_title_breaking_news">Breaking News</string>
+    <string name="tab_title_saved_news">Saved News</string>
+    <string name="tab_title_search_news">Search News</string>
+
 </resources>

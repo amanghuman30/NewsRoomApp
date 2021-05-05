@@ -5,4 +5,6 @@
     <string name="tab_title_saved_news">Saved News</string>
     <string name="tab_title_search_news">Search News</string>
 
+    <string name="hint_search_news">Search</string>
+
 </resources>

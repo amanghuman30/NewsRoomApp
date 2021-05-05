@@ -1,6 +1,6 @@
 package com.newsroom.app.ui.api
 
-import com.newsroom.app.ui.data.NewsApiResponse
+import com.newsroom.app.ui.models.NewsApiResponse
 import com.newsroom.app.ui.util.Constants
 import retrofit2.Response
 import retrofit2.http.GET

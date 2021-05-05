@@ -1,4 +1,4 @@
-package com.newsroom.app.ui
+package com.newsroom.app.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

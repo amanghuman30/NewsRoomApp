@@ -24,7 +24,7 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() 
         }
     }
 
-    val differ = AsyncListDiffer(this, differItemCallback)
+    private val differ = AsyncListDiffer(this, differItemCallback)
 
     inner class ArticleViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView)
 
@@ -35,7 +35,7 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() 
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        var article = differ.currentList[position]
+        val article = differ.currentList[position]
         holder.itemView.apply {
             Glide.with(this).load(article.url).into(imageViewArticle)
             titleArticleTV.text = article.title

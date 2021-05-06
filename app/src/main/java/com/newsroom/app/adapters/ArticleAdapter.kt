@@ -1,4 +1,4 @@
-package com.newsroom.app.ui.adapters
+package com.newsroom.app.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.newsroom.app.R
-import com.newsroom.app.ui.models.Article
+import com.newsroom.app.models.Article
 import kotlinx.android.synthetic.main.item_view_article.view.*
 
 class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {

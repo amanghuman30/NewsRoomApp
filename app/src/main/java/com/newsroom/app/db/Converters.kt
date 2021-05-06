@@ -1,8 +1,7 @@
-package com.newsroom.app.ui.db
+package com.newsroom.app.db
 
 import androidx.room.TypeConverter
-import androidx.room.TypeConverters
-import com.newsroom.app.ui.models.Source
+import com.newsroom.app.models.Source
 
 class Converters {
 

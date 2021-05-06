@@ -1,4 +1,4 @@
-package com.newsroom.app.ui.util
+package com.newsroom.app.util
 
 class Constants {
 

@@ -1,11 +1,11 @@
-package com.newsroom.app.ui.db
+package com.newsroom.app.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.newsroom.app.ui.models.Article
+import com.newsroom.app.models.Article
 
 @Database(
     entities = [Article::class],

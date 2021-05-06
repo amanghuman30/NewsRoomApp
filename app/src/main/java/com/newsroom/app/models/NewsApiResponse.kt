@@ -1,4 +1,4 @@
-package com.newsroom.app.ui.models
+package com.newsroom.app.models
 
 data class NewsApiResponse(
     val articles: List<Article>,

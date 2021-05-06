@@ -1,4 +1,4 @@
-package com.newsroom.app.ui.models
+package com.newsroom.app.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

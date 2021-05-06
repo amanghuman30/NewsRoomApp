@@ -1,6 +1,6 @@
-package com.newsroom.app.ui.api
+package com.newsroom.app.api
 
-import com.newsroom.app.ui.util.Constants
+import com.newsroom.app.util.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

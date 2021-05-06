@@ -1,11 +1,11 @@
-package com.newsroom.app.ui.db
+package com.newsroom.app.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.newsroom.app.ui.models.Article
+import com.newsroom.app.models.Article
 
 interface ArticleDAO {
 

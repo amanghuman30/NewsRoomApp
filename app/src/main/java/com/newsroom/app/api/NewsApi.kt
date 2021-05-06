@@ -1,7 +1,7 @@
-package com.newsroom.app.ui.api
+package com.newsroom.app.api
 
-import com.newsroom.app.ui.models.NewsApiResponse
-import com.newsroom.app.ui.util.Constants
+import com.newsroom.app.models.NewsApiResponse
+import com.newsroom.app.util.Constants
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

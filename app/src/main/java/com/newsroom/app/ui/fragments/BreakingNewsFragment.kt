@@ -54,11 +54,11 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     }
 
     private fun showProgressBar() {
-        progressBar.visibility = View.VISIBLE
+        breakingNewsPB.visibility = View.VISIBLE
     }
 
     private fun hideProgressBar() {
-        progressBar.visibility = View.GONE
+        breakingNewsPB.visibility = View.GONE
     }
 
 }

@@ -10,4 +10,6 @@ class NewsRepository(db : ArticleDatabase) {
     suspend fun getBreakingNews(countryCode : String, pageNumber : Int) =
         RetrofitBuilder.getNewsApi.getBreakingNews(countryCode, pageNumber)
 
+    suspend fun searchNews(query : String, pageNumber: Int) =
+        RetrofitBuilder.getNewsApi.searchNews(query, pageNumber)
 }

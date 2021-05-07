@@ -11,10 +11,10 @@ import com.newsroom.app.R
 import com.newsroom.app.models.Article
 import kotlinx.android.synthetic.main.item_view_article.view.*
 
-class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
+class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
 
-    private var differItemCallback = object : DiffUtil.ItemCallback<Article>() {
+    private val differItemCallback = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
             return oldItem.url == newItem.url
         }
@@ -24,7 +24,7 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() 
         }
     }
 
-    private val differ = AsyncListDiffer(this, differItemCallback)
+    val differ = AsyncListDiffer(this, differItemCallback)
 
     inner class ArticleViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView)
 
@@ -37,7 +37,7 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
         holder.itemView.apply {
-            Glide.with(this).load(article.url).into(imageViewArticle)
+            Glide.with(this).load(article.urlToImage).into(imageViewArticle)
             titleArticleTV.text = article.title
             descriptionArticleTV.text = article.description
             sourceArticleTV.text = article.source.name

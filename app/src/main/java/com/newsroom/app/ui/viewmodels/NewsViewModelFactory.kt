@@ -1,7 +1,8 @@
-package com.newsroom.app.ui
+package com.newsroom.app.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.newsroom.app.ui.repository.NewsRepository
 
 class NewsViewModelFactory(val newsRepository : NewsRepository) : ViewModelProvider.Factory {
 

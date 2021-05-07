@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.newsroom.app.R
-import com.newsroom.app.ui.NewsViewModel
+import com.newsroom.app.ui.viewmodels.NewsViewModel
 import com.newsroom.app.ui.activities.NewsMainActivity
 
 class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {

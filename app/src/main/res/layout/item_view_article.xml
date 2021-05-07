@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="16dp">
 
     <ImageView
         android:id="@+id/imageViewArticle"
-        android:layout_width="80dp"
+        android:layout_width="160dp"
         android:layout_height="80dp"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,7 +21,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:gravity="start"
-        android:maxLines="1"
+        android:maxLines="2"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewArticle"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,38 +31,35 @@
         android:id="@+id/sourceArticleTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:gravity="start"
         android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewArticle"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageViewArticle"
-        app:layout_constraintTop_toBottomOf="@+id/titleArticleTV" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewArticle" />
 
     <TextView
         android:id="@+id/descriptionArticleTV"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:gravity="start"
-        android:maxLines="2"
+        android:layout_marginTop="4dp"
+        android:gravity="top|start"
+        app:layout_constraintBottom_toBottomOf="@+id/postDateTV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toEndOf="@+id/imageViewArticle"
-        app:layout_constraintTop_toBottomOf="@+id/sourceArticleTV" />
+        app:layout_constraintTop_toBottomOf="@+id/titleArticleTV" />
 
     <TextView
         android:id="@+id/postDateTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:gravity="start"
         android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/sourceArticleTV"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageViewArticle"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionArticleTV" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sourceArticleTV" />
 </androidx.constraintlayout.widget.ConstraintLayout>

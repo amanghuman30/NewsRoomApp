@@ -1,12 +1,10 @@
 package com.newsroom.app.db
 
 import androidx.lifecycle.LiveData
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.newsroom.app.models.Article
 
+@Dao
 interface ArticleDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

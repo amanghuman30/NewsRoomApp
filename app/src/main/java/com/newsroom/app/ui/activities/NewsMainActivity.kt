@@ -2,14 +2,17 @@ package com.newsroom.app.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.newsroom.app.R
 import com.newsroom.app.db.ArticleDatabase
-import com.newsroom.app.ui.NewsRepository
-import com.newsroom.app.ui.NewsViewModel
-import com.newsroom.app.ui.NewsViewModelFactory
+import com.newsroom.app.ui.repository.NewsRepository
+import com.newsroom.app.ui.viewmodels.NewsViewModel
+import com.newsroom.app.ui.viewmodels.NewsViewModelFactory
 import kotlinx.android.synthetic.main.activity_news_main.*
 
 class NewsMainActivity : AppCompatActivity() {
@@ -20,10 +23,14 @@ class NewsMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_main)
 
+        bottomNavigationView.setupWithNavController(navHostFragment.findNavController())
+
         val newsRepository = NewsRepository(ArticleDatabase(this))
         val newsViewModelFactory = NewsViewModelFactory(newsRepository)
         newsViewModel = ViewModelProvider(this, newsViewModelFactory).get(NewsViewModel::class.java)
 
-        bottomNavigationView.setupWithNavController(navHostFragment.findNavController())
+        //newsViewModel.breakingNewsLiveData.observe(this, Observer {response ->
+        //    Toast.makeText(this,"received in activity", Toast.LENGTH_SHORT).show()
+        //})
     }
 }

@@ -3,6 +3,7 @@ package com.newsroom.app.ui.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -67,6 +68,12 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         savedNewsRecycler.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
+        }
+        newsAdapter.setOnItemClickListener { article ->
+            val bundle = Bundle().apply {
+                putSerializable("article_arg", article)
+            }
+            findNavController().navigate(R.id.action_savedNewsFragment_to_articleFragment, bundle)
         }
     }
 }

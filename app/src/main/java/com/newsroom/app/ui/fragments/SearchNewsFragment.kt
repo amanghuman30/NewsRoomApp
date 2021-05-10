@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.newsroom.app.R
 import com.newsroom.app.adapters.NewsAdapter
@@ -69,6 +70,12 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
         searchNewsRecycler.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
+        }
+        newsAdapter.setOnItemClickListener { article ->
+            var bundle = Bundle().apply {
+                putSerializable("article_arg",article)
+            }
+            findNavController().navigate(R.id.action_searchNewsFragment_to_articleFragment, bundle)
         }
     }
 

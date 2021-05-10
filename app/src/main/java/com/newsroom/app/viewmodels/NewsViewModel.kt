@@ -66,6 +66,7 @@ class NewsViewModel(app : Application,
         } catch (e : IOException) {
             searchNewsLiveData.postValue(Resource.Error("Network failure"))
         }
+
     }
 
     private fun handleSearchNewsResponse(response : Response<NewsApiResponse>) : Resource<NewsApiResponse> {

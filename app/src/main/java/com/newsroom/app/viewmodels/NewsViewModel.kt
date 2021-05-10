@@ -15,6 +15,7 @@ import com.newsroom.app.repository.NewsRepository
 import com.newsroom.app.util.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.io.IOException
 
 class NewsViewModel(app : Application,
                     val newsRepository: NewsRepository) : AndroidViewModel(app) {
@@ -31,10 +32,19 @@ class NewsViewModel(app : Application,
 
     fun getBreakingNews(countryCode : String) = viewModelScope.launch {
         breakingNewsLiveData.postValue(Resource.Loading())
-        val response = newsRepository.getBreakingNews(countryCode, breakingNewsPageNumber)
-        breakingNewsLiveData.postValue(handleBreakingNewsResponse(response))
-        breakingNewsPageNumber++
+        try {
+            if (isInternetConnected()) {
+                val response = newsRepository.getBreakingNews(countryCode, breakingNewsPageNumber)
+                breakingNewsLiveData.postValue(handleBreakingNewsResponse(response))
+                breakingNewsPageNumber++
+            } else {
+                breakingNewsLiveData.postValue(Resource.Error("No internet connection"))
+            }
+        } catch (e : IOException) {
+            breakingNewsLiveData.postValue(Resource.Error("Network Failure"))
+        }
     }
+
 
     private fun handleBreakingNewsResponse(response : Response<NewsApiResponse>): Resource<NewsApiResponse> {
         if (response.isSuccessful) {
@@ -47,8 +57,15 @@ class NewsViewModel(app : Application,
 
     fun searchNews(query : String) = viewModelScope.launch {
         searchNewsLiveData.postValue(Resource.Loading())
-        val response = newsRepository.searchNews(query, searchNewsPageNumber)
-        searchNewsLiveData.postValue(handleSearchNewsResponse(response))
+        try {
+            if(isInternetConnected()) {
+                val response = newsRepository.searchNews(query, searchNewsPageNumber)
+                searchNewsLiveData.postValue(handleSearchNewsResponse(response))
+            } else
+                searchNewsLiveData.postValue(Resource.Error("No internet connection"))
+        } catch (e : IOException) {
+            searchNewsLiveData.postValue(Resource.Error("Network failure"))
+        }
     }
 
     private fun handleSearchNewsResponse(response : Response<NewsApiResponse>) : Resource<NewsApiResponse> {
@@ -72,28 +89,29 @@ class NewsViewModel(app : Application,
         }
     }
 
-     private fun isInternetConnected() : Boolean {
-         val networkManager = getApplication<NewsApplication>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-             val activeNetwork = networkManager.activeNetwork ?: return false
-             val networkCapabilities = networkManager.getNetworkCapabilities(activeNetwork) ?: return false
+    private fun isInternetConnected() : Boolean {
+        val networkManager = getApplication<NewsApplication>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val activeNetwork = networkManager.activeNetwork ?: return false
+            val networkCapabilities = networkManager.getNetworkCapabilities(activeNetwork) ?: return false
 
-             return when {
-                 networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                 networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                 networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-                 else -> false
-             }
-         } else {
-             networkManager.activeNetworkInfo.run {
-                 return when(type) {
-                     ConnectivityManager.TYPE_WIFI -> true
-                     ConnectivityManager.TYPE_MOBILE -> true
-                     ConnectivityManager.TYPE_ETHERNET -> true
-                     else -> false
-                 }
-             }
-         }
-     }
+            return when {
+                networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                else -> false
+            }
+        } else {
+            networkManager.activeNetworkInfo?.run {
+                return when(type) {
+                    ConnectivityManager.TYPE_WIFI -> true
+                    ConnectivityManager.TYPE_MOBILE -> true
+                    ConnectivityManager.TYPE_ETHERNET -> true
+                    else -> false
+                }
+            }
+        }
+        return false
+    }
 
 }

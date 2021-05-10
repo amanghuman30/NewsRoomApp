@@ -24,7 +24,9 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
 
         articleWebView.apply {
             webViewClient = WebViewClient()
-            loadUrl(article.url)
+            article.url?.let {
+                loadUrl(it)
+            }
         }
 
         saveFab.setOnClickListener { view ->

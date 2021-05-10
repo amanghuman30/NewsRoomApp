@@ -22,10 +22,11 @@ class NewsViewModel(val newsRepository: NewsRepository) : ViewModel() {
         getBreakingNews("us")
     }
 
-    private fun getBreakingNews(countryCode : String) = viewModelScope.launch {
+    fun getBreakingNews(countryCode : String) = viewModelScope.launch {
         breakingNewsLiveData.postValue(Resource.Loading())
         val response = newsRepository.getBreakingNews(countryCode, breakingNewsPageNumber)
         breakingNewsLiveData.postValue(handleBreakingNewsResponse(response))
+        breakingNewsPageNumber++
     }
 
     private fun handleBreakingNewsResponse(response : Response<NewsApiResponse>): Resource<NewsApiResponse> {

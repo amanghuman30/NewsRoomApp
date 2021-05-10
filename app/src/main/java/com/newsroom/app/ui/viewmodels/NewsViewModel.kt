@@ -1,19 +1,20 @@
 package com.newsroom.app.ui.viewmodels
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.newsroom.app.models.Article
 import com.newsroom.app.models.NewsApiResponse
-import com.newsroom.app.ui.repository.NewsRepository
+import com.newsroom.app.repository.NewsRepository
 import com.newsroom.app.util.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
+class NewsViewModel(val newsRepository: NewsRepository) : ViewModel() {
 
     var breakingNewsLiveData : MutableLiveData<Resource<NewsApiResponse>> = MutableLiveData()
-    var pageNumber = 1
+    var breakingNewsPageNumber = 1
+    var searchNewsPageNumber = 1
 
     var searchNewsLiveData : MutableLiveData<Resource<NewsApiResponse>> = MutableLiveData()
 
@@ -23,7 +24,7 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
     private fun getBreakingNews(countryCode : String) = viewModelScope.launch {
         breakingNewsLiveData.postValue(Resource.Loading())
-        val response = newsRepository.getBreakingNews(countryCode, pageNumber)
+        val response = newsRepository.getBreakingNews(countryCode, breakingNewsPageNumber)
         breakingNewsLiveData.postValue(handleBreakingNewsResponse(response))
     }
 
@@ -38,7 +39,7 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
     fun searchNews(query : String) = viewModelScope.launch {
         searchNewsLiveData.postValue(Resource.Loading())
-        val response = newsRepository.searchNews(query, pageNumber)
+        val response = newsRepository.searchNews(query, searchNewsPageNumber)
         searchNewsLiveData.postValue(handleSearchNewsResponse(response))
     }
 
@@ -49,6 +50,18 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
             }
         }
         return Resource.Error(response.message())
+    }
+
+    fun saveArticle(article: Article) {
+        viewModelScope.launch {
+            newsRepository.updateInsertArticle(article)
+        }
+    }
+
+    fun deleteArticle(article : Article) {
+        viewModelScope.launch {
+            newsRepository.deleteArticle(article)
+        }
     }
 
 }

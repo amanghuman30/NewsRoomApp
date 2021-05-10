@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.newsroom.app.R
-import com.newsroom.app.ui.viewmodels.NewsViewModel
+import com.newsroom.app.viewmodels.NewsViewModel
 import com.newsroom.app.ui.activities.NewsMainActivity
 import kotlinx.android.synthetic.main.fragment_article.*
 

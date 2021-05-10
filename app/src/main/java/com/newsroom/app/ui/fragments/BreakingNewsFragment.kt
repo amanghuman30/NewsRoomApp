@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.newsroom.app.R
 import com.newsroom.app.adapters.NewsAdapter
-import com.newsroom.app.ui.viewmodels.NewsViewModel
+import com.newsroom.app.viewmodels.NewsViewModel
 import com.newsroom.app.ui.activities.NewsMainActivity
 import com.newsroom.app.util.Constants
 import com.newsroom.app.util.Resource

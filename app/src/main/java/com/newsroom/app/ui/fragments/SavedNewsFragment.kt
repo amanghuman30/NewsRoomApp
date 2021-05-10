@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.newsroom.app.R
 import com.newsroom.app.adapters.NewsAdapter
-import com.newsroom.app.ui.viewmodels.NewsViewModel
+import com.newsroom.app.viewmodels.NewsViewModel
 import com.newsroom.app.ui.activities.NewsMainActivity
 import kotlinx.android.synthetic.main.fragment_saved_news.*
 

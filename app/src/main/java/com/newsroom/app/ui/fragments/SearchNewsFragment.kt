@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.newsroom.app.R
 import com.newsroom.app.adapters.NewsAdapter
-import com.newsroom.app.ui.viewmodels.NewsViewModel
+import com.newsroom.app.viewmodels.NewsViewModel
 import com.newsroom.app.ui.activities.NewsMainActivity
 import com.newsroom.app.util.Resource
 import kotlinx.android.synthetic.main.fragment_search_news.*

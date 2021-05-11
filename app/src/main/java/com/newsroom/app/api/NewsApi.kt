@@ -1,7 +1,7 @@
 package com.newsroom.app.api
 
+import com.newsroom.app.BuildConfig
 import com.newsroom.app.models.NewsApiResponse
-import com.newsroom.app.util.Constants.Companion.NEWS_API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -15,7 +15,7 @@ interface NewsApi {
         @Query("page")
         pageNum : Int = 1,
         @Query("apiKey")
-        apiKey : String = NEWS_API_KEY
+        apiKey : String = BuildConfig.NEWS_API_KEY
     ) : Response<NewsApiResponse>
 
     @GET("v2/everything")
@@ -25,7 +25,7 @@ interface NewsApi {
         @Query("page")
         pageNum : Int = 1,
         @Query("apiKey")
-        apiKey : String = NEWS_API_KEY
+        apiKey : String = BuildConfig.NEWS_API_KEY
     ) : Response<NewsApiResponse>
 
 }

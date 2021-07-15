@@ -1,6 +1,6 @@
 package com.newsroom.app.util
 
-sealed  class Resource<T>(
+sealed class Resource<T>(
     var data : T? = null,
     var message : String? = null
 ) {

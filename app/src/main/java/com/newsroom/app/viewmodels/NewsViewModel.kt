@@ -12,13 +12,16 @@ import com.newsroom.app.NewsApplication
 import com.newsroom.app.models.Article
 import com.newsroom.app.models.NewsApiResponse
 import com.newsroom.app.repository.NewsRepository
+import com.newsroom.app.repository.Repository
 import com.newsroom.app.util.Resource
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
 
 class NewsViewModel(app : Application,
-                    val newsRepository: NewsRepository) : AndroidViewModel(app) {
+                    val newsRepository: Repository, val dispatcher : CoroutineDispatcher) : AndroidViewModel(app) {
 
     var breakingNewsLiveData : MutableLiveData<Resource<NewsApiResponse>> = MutableLiveData()
     var breakingNewsPageNumber = 1
@@ -30,16 +33,16 @@ class NewsViewModel(app : Application,
         getBreakingNews("us")
     }
 
-    fun getBreakingNews(countryCode : String) = viewModelScope.launch {
+    fun getBreakingNews(countryCode : String) = viewModelScope.launch(dispatcher) {
         breakingNewsLiveData.postValue(Resource.Loading())
         try {
-            if (isInternetConnected()) {
+            //if (isInternetConnected()) {
                 val response = newsRepository.getBreakingNews(countryCode, breakingNewsPageNumber)
                 breakingNewsLiveData.postValue(handleBreakingNewsResponse(response))
                 breakingNewsPageNumber++
-            } else {
+            /*} else {
                 breakingNewsLiveData.postValue(Resource.Error("No internet connection"))
-            }
+            }*/
         } catch (e : IOException) {
             breakingNewsLiveData.postValue(Resource.Error("Network Failure"))
         }
@@ -55,7 +58,7 @@ class NewsViewModel(app : Application,
         return Resource.Error(response.message())
     }
 
-    fun searchNews(query : String) = viewModelScope.launch {
+    fun searchNews(query : String) = viewModelScope.launch(dispatcher) {
         searchNewsLiveData.postValue(Resource.Loading())
         try {
             if(isInternetConnected()) {
@@ -79,13 +82,13 @@ class NewsViewModel(app : Application,
     }
 
     fun saveArticle(article: Article) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             newsRepository.updateInsertArticle(article)
         }
     }
 
     fun deleteArticle(article : Article) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             newsRepository.deleteArticle(article)
         }
     }

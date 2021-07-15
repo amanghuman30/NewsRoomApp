@@ -1,4 +1,4 @@
-package com.newsroom.app.db
+package com.newsroom.app.data.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

@@ -5,6 +5,8 @@ import android.view.View
 import android.widget.AbsListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +16,10 @@ import com.newsroom.app.viewmodels.NewsViewModel
 import com.newsroom.app.ui.activities.NewsMainActivity
 import com.newsroom.app.util.Constants
 import com.newsroom.app.util.Resource
+import com.newsroom.app.util.ServiceLocator
+import com.newsroom.app.viewmodels.NewsViewModelFactory
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
+import kotlinx.coroutines.Dispatchers
 
 class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
@@ -27,17 +32,25 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        newsViewModel = (activity as NewsMainActivity).newsViewModel
-
+        newsViewModel = if(activity is NewsMainActivity) {
+            (activity as NewsMainActivity).newsViewModel
+        } else {
+            ViewModelProvider(
+                this,
+                NewsViewModelFactory(requireActivity().application,
+                    ServiceLocator.provideRepository(requireContext()),
+                    Dispatchers.IO)
+            ).get(NewsViewModel::class.java)
+        }
         setupRecyclerView()
 
-        newsViewModel.breakingNewsLiveData.observe(viewLifecycleOwner, { resource ->
+        newsViewModel?.breakingNewsLiveData.observe(viewLifecycleOwner, { resource ->
             when(resource){
                 is Resource.Success -> {
                     hideProgressBar()
                     resource.data?.let { response ->
                         newsAdapter.differ.submitList(response.articles.toList())
-                        val totalPages = response.totalResults / Constants.QUERY_ITEM_COUNT +2
+                         val totalPages = response.totalResults / Constants.QUERY_ITEM_COUNT +2
                         isLastPage = newsViewModel.breakingNewsPageNumber == totalPages
                     }
                 }

@@ -13,15 +13,17 @@ import com.newsroom.app.models.Article
 import com.newsroom.app.models.NewsApiResponse
 import com.newsroom.app.repository.NewsRepository
 import com.newsroom.app.repository.Repository
+import com.newsroom.app.util.BaseDispatchers
 import com.newsroom.app.util.Resource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
+import javax.inject.Inject
 
-class NewsViewModel(app : Application,
-                    val newsRepository: Repository, val dispatcher : CoroutineDispatcher) : AndroidViewModel(app) {
+class NewsViewModel constructor(app : Application,
+                    val newsRepository: Repository, val dispatcher : BaseDispatchers) : AndroidViewModel(app) {
 
     var breakingNewsLiveData : MutableLiveData<Resource<NewsApiResponse>> = MutableLiveData()
     var breakingNewsPageNumber = 1
@@ -33,16 +35,16 @@ class NewsViewModel(app : Application,
         getBreakingNews("us")
     }
 
-    fun getBreakingNews(countryCode : String) = viewModelScope.launch(dispatcher) {
+    fun getBreakingNews(countryCode : String) = viewModelScope.launch(dispatcher.io()) {
         breakingNewsLiveData.postValue(Resource.Loading())
         try {
-            //if (isInternetConnected()) {
+            if (isInternetConnected()) {
                 val response = newsRepository.getBreakingNews(countryCode, breakingNewsPageNumber)
                 breakingNewsLiveData.postValue(handleBreakingNewsResponse(response))
                 breakingNewsPageNumber++
-            /*} else {
+            } else {
                 breakingNewsLiveData.postValue(Resource.Error("No internet connection"))
-            }*/
+            }
         } catch (e : IOException) {
             breakingNewsLiveData.postValue(Resource.Error("Network Failure"))
         }
@@ -58,7 +60,7 @@ class NewsViewModel(app : Application,
         return Resource.Error(response.message())
     }
 
-    fun searchNews(query : String) = viewModelScope.launch(dispatcher) {
+    fun searchNews(query : String) = viewModelScope.launch(dispatcher.io()) {
         searchNewsLiveData.postValue(Resource.Loading())
         try {
             if(isInternetConnected()) {
@@ -82,13 +84,13 @@ class NewsViewModel(app : Application,
     }
 
     fun saveArticle(article: Article) {
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch(dispatcher.io()) {
             newsRepository.updateInsertArticle(article)
         }
     }
 
     fun deleteArticle(article : Article) {
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch(dispatcher.io()) {
             newsRepository.deleteArticle(article)
         }
     }

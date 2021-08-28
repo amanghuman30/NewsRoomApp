@@ -22,6 +22,7 @@ class NewsMainActivityTest {
 
         onView(withId(R.id.breakingNewsRecycler)).check(matches(isDisplayed()))
 
+        activityScenario.close()
     }
 
 }

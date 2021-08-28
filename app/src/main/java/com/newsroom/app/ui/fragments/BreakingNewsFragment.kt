@@ -15,6 +15,7 @@ import com.newsroom.app.adapters.NewsAdapter
 import com.newsroom.app.viewmodels.NewsViewModel
 import com.newsroom.app.ui.activities.NewsMainActivity
 import com.newsroom.app.util.Constants
+import com.newsroom.app.util.DispatchersContainer
 import com.newsroom.app.util.Resource
 import com.newsroom.app.util.ServiceLocator
 import com.newsroom.app.viewmodels.NewsViewModelFactory
@@ -39,12 +40,12 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 this,
                 NewsViewModelFactory(requireActivity().application,
                     ServiceLocator.provideRepository(requireContext()),
-                    Dispatchers.IO)
+                    DispatchersContainer())
             ).get(NewsViewModel::class.java)
         }
         setupRecyclerView()
 
-        newsViewModel?.breakingNewsLiveData.observe(viewLifecycleOwner, { resource ->
+        newsViewModel.breakingNewsLiveData.observe(viewLifecycleOwner, { resource ->
             when(resource){
                 is Resource.Success -> {
                     hideProgressBar()

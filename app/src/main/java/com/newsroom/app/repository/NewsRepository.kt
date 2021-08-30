@@ -3,8 +3,11 @@ package com.newsroom.app.repository
 import com.newsroom.app.api.RetrofitBuilder
 import com.newsroom.app.data.db.ArticleDatabase
 import com.newsroom.app.models.Article
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NewsRepository(val db : ArticleDatabase) : Repository {
+@Singleton
+class NewsRepository @Inject constructor(val db : ArticleDatabase) : Repository {
 
     override suspend fun getBreakingNews(countryCode : String, pageNumber : Int) =
         RetrofitBuilder.getNewsApi.getBreakingNews(countryCode, pageNumber)

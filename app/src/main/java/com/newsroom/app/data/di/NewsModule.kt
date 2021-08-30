@@ -29,20 +29,17 @@ class NewsModule {
 
     @Provides
     @Singleton
-    fun provideNewsRepository(db : ArticleDatabase) : Repository{
-        return NewsRepository(db)
-    }
-
-    @Provides
-    @Singleton
     fun providesNewsApplication(context: Context) : Application {
         return context.applicationContext as NewsApplication
     }
 
     @Module
     interface BindModules {
+
         @Binds
-        @Singleton
+        fun provideNewsRepository(repository: NewsRepository) : Repository
+
+        @Binds
         fun provideDispatchers(container: DispatchersContainer) : BaseDispatchers
     }
 

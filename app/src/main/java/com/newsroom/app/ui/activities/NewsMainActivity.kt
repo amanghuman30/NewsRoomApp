@@ -1,5 +1,6 @@
 package com.newsroom.app.ui.activities
 
+import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -14,9 +15,11 @@ import com.newsroom.app.util.DispatchersContainer
 import com.newsroom.app.util.ServiceLocator
 import com.newsroom.app.viewmodels.NewsViewModel
 import com.newsroom.app.viewmodels.NewsViewModelFactory
+import dagger.Lazy
 import kotlinx.android.synthetic.main.activity_news_main.*
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
+import javax.inject.Provider
 
 class NewsMainActivity : AppCompatActivity() {
 
@@ -30,7 +33,6 @@ class NewsMainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_main)
-
         //val newsRepository = NewsRepository(ArticleDatabase(this))
         //val newsRepository = ServiceLocator.provideRepository(this)
         //val newsViewModelFactory = NewsViewModelFactory(application, newsRepository, DispatchersContainer())
@@ -41,4 +43,5 @@ class NewsMainActivity : AppCompatActivity() {
 
         bottomNavigationView.setupWithNavController(navHostFragment.findNavController())
     }
+
 }
